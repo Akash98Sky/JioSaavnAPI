@@ -1,6 +1,3 @@
-const search_base_url =
-    'https://www.jiosaavn.com/api.php?__call=autocomplete.get&_format=json&_marker=0&cc=in&includeMetaTags=1&query=';
-
 Uri buildSearchUri(String query) => Uri.https('www.jiosaavn.com', '/api.php', {
       '__call': 'autocomplete.get',
       '_format': 'json',
@@ -10,13 +7,13 @@ Uri buildSearchUri(String query) => Uri.https('www.jiosaavn.com', '/api.php', {
       'query': query,
     });
 
-Uri buildSongIdUri(List<String> id) =>
+Uri buildSongIdUri(List<String> ids) =>
     Uri.https('www.jiosaavn.com', '/api.php', {
       '__call': 'song.getDetails',
       '_format': 'json',
       '_marker': '0',
       'cc': 'in',
-      'pids': id.join(','),
+      'pids': ids.join(','),
     });
 
 Uri buildAlbumIdUri(String id) => Uri.https('www.jiosaavn.com', '/api.php', {

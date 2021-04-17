@@ -3,6 +3,12 @@
 /// More dartdocs go here.
 library jiosaavn_api;
 
-export 'src/jiosaavn_api_base.dart';
+/// JSON models
+export 'src/models/album.dart';
+export 'src/models/lyrics.dart';
+export 'src/models/playlist.dart';
+export 'src/models/search_result.dart';
+export 'src/models/song.dart';
 
-// TODO: Export any libraries intended for clients of this package.
+/// API Base
+export 'src/jiosaavn_api_base.dart';

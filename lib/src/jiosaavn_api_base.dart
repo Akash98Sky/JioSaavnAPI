@@ -1,16 +1,16 @@
-import 'package:jiosaavn_api/src/models/playlist.dart';
-
+import 'helpers/formatter.dart';
 import 'helpers/uri_builder.dart';
 import 'models/album.dart';
+import 'models/lyrics.dart';
+import 'models/playlist.dart';
 import 'models/search_result.dart';
 import 'models/song.dart';
 import 'services/api_client.dart';
 
 class JioSaavn {
   final _apiClient = ApiClient();
-  bool get isAwesome => true;
 
-  Future<SearchResult> search(String query, lyrics) async {
+  Future<SearchResult> search(String query) async {
     final searchRes = await _apiClient.requestGetJson(buildSearchUri(query));
 
     return SearchResult.fromJson(searchRes);
@@ -29,29 +29,30 @@ class JioSaavn {
         .last;
   }
 
-  Future<List<SongDetails>> getSongs(List<String> ids, lyrics) async {
+  Future<List<SongDetails>> getSongs(List<String> ids) async {
     final songsRes = await _apiClient.requestGetJson(buildSongIdUri(ids));
 
-    return List.from(ids.map((id) => SongDetails.fromJson(songsRes[id])));
+    return List.from(
+        ids.map((id) => SongDetails.fromJson(formatSongJson(songsRes[id]))));
   }
 
-  Future<AlbumDetails> getAlbum(String albumId, lyrics) async {
+  Future<AlbumDetails> getAlbum(String albumId) async {
     final albumRes = await _apiClient.requestGetJson(buildAlbumIdUri(albumId));
 
-    return AlbumDetails.fromJson(albumRes);
+    return AlbumDetails.fromJson(formatAlbumJson(albumRes));
   }
 
-  Future<PlaylistDetails> getPlaylist(String playlistId, lyrics) async {
+  Future<PlaylistDetails> getPlaylist(String playlistId) async {
     final playlistRes =
         await _apiClient.requestGetJson(buildPlaylistIdUri(playlistId));
 
-    return PlaylistDetails.fromJson(playlistRes);
+    return PlaylistDetails.fromJson(formatPlaylistJson(playlistRes));
   }
 
-  Future getLyrics(String lyricsId) async {
+  Future<Lyrics> getLyrics(String lyricsId) async {
     final lyricsRes =
         await _apiClient.requestGetJson(buildLyricsIdUri(lyricsId));
 
-    return lyricsRes;
+    return Lyrics.fromJson(lyricsRes);
   }
 }

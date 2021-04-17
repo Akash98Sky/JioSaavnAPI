@@ -1,7 +1,4 @@
-A library for Dart developers.
-
-Created from templates made available by Stagehand under a BSD-style
-[license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).
+# JioSaavnAPI
 
 ## Usage
 
@@ -11,7 +8,10 @@ A simple usage example:
 import 'package:jiosaavn_api/jiosaavn_api.dart';
 
 main() {
-  var awesome = new Awesome();
+  var saavn = JioSaavn();
+
+  saavn.search('Jee le zara');
+  saavn.getSongs(['iU7UPQsU', 'f6_mfbG0']);
 }
 ```
 
@@ -20,4 +20,3 @@ main() {
 Please file feature requests and bugs at the [issue tracker][tracker].
 
 [tracker]: http://example.com/issues/replaceme
-# JioSaavnAPI

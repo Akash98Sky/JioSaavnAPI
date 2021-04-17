@@ -12,7 +12,7 @@ class Song extends JsonModel {
     this.description,
     this.ctr,
     this.position,
-    this.moreInfo,
+    this.moreInfo = const SongInfo(),
   });
 
   final String? id;
@@ -24,7 +24,7 @@ class Song extends JsonModel {
   final String? description;
   final int? ctr;
   final int? position;
-  final MoreInfo? moreInfo;
+  final SongInfo moreInfo;
 
   factory Song.fromJson(Map<String, dynamic> json) => Song(
         id: json['id'],
@@ -36,7 +36,7 @@ class Song extends JsonModel {
         description: json['description'],
         ctr: json['ctr'],
         position: json['position'],
-        moreInfo: MoreInfo.fromJson(json['more_info']),
+        moreInfo: SongInfo.fromJson(json['more_info']),
       );
 
   @override
@@ -50,12 +50,12 @@ class Song extends JsonModel {
         'description': description,
         'ctr': ctr,
         'position': position,
-        'more_info': moreInfo?.toJson(),
+        'more_info': moreInfo.toJson(),
       };
 }
 
-class MoreInfo {
-  MoreInfo({
+class SongInfo {
+  const SongInfo({
     this.vcode,
     this.vlink,
     this.primaryArtists,
@@ -73,7 +73,7 @@ class MoreInfo {
   final bool? trillerAvailable;
   final String? language;
 
-  factory MoreInfo.fromJson(Map<String, dynamic> json) => MoreInfo(
+  factory SongInfo.fromJson(Map<String, dynamic> json) => SongInfo(
         vcode: json['vcode'],
         vlink: json['vlink'],
         primaryArtists: json['primary_artists'],
@@ -103,10 +103,10 @@ class SongDetails {
     this.year,
     this.music,
     this.musicId,
-    this.primaryArtists,
-    this.primaryArtistsId,
-    this.featuredArtists,
-    this.featuredArtistsId,
+    this.primaryArtists = const [],
+    this.primaryArtistsId = const [],
+    this.featuredArtists = const [],
+    this.featuredArtistsId = const [],
     this.singers,
     this.starring,
     this.image,
@@ -121,8 +121,7 @@ class SongDetails {
     this.explicitContent,
     this.hasLyrics,
     this.lyricsSnippet,
-    this.encryptedMediaUrl,
-    this.encryptedMediaPath,
+    this.mediaUrl,
     this.mediaPreviewUrl,
     this.permaUrl,
     this.albumUrl,
@@ -142,10 +141,10 @@ class SongDetails {
   final int? year;
   final String? music;
   final String? musicId;
-  final String? primaryArtists;
-  final String? primaryArtistsId;
-  final String? featuredArtists;
-  final String? featuredArtistsId;
+  final List<String> primaryArtists;
+  final List<String> primaryArtistsId;
+  final List<String> featuredArtists;
+  final List<String> featuredArtistsId;
   final String? singers;
   final String? starring;
   final String? image;
@@ -160,8 +159,7 @@ class SongDetails {
   final int? explicitContent;
   final bool? hasLyrics;
   final String? lyricsSnippet;
-  final String? encryptedMediaUrl;
-  final String? encryptedMediaPath;
+  final String? mediaUrl;
   final String? mediaPreviewUrl;
   final String? permaUrl;
   final String? albumUrl;
@@ -181,10 +179,22 @@ class SongDetails {
         year: json['year'] == null ? null : int.parse('${json['year']}'),
         music: json['music'],
         musicId: json['music_id'],
-        primaryArtists: json['primary_artists'],
-        primaryArtistsId: json['primary_artists_id'],
-        featuredArtists: json['featured_artists'],
-        featuredArtistsId: json['featured_artists_id'],
+        primaryArtists:
+            json['primary_artists'] == null || json['primary_artists'].isEmpty
+                ? []
+                : (json['primary_artists'] as String).split(', '),
+        primaryArtistsId: json['primary_artists_id'] == null ||
+                json['primary_artists_id'].isEmpty
+            ? []
+            : (json['primary_artists_id'] as String).split(', '),
+        featuredArtists:
+            json['featured_artists'] == null || json['featured_artists'].isEmpty
+                ? []
+                : (json['featured_artists'] as String).split(', '),
+        featuredArtistsId: json['featured_artists_id'] == null ||
+                json['featured_artists_id'].isEmpty
+            ? []
+            : (json['featured_artists_id'] as String).split(', '),
         singers: json['singers'],
         starring: json['starring'],
         image: json['image'],
@@ -205,8 +215,7 @@ class SongDetails {
             ? (json['has_lyrics'] as String).toBool()
             : json['has_lyrics'],
         lyricsSnippet: json['lyrics_snippet'],
-        encryptedMediaUrl: json['encrypted_media_url'],
-        encryptedMediaPath: json['encrypted_media_path'],
+        mediaUrl: json['media_url'],
         mediaPreviewUrl: json['media_preview_url'],
         permaUrl: json['perma_url'],
         albumUrl: json['album_url'],
@@ -249,8 +258,7 @@ class SongDetails {
         'explicit_content': explicitContent,
         'has_lyrics': hasLyrics,
         'lyrics_snippet': lyricsSnippet,
-        'encrypted_media_url': encryptedMediaUrl,
-        'encrypted_media_path': encryptedMediaPath,
+        'media_url': mediaUrl,
         'media_preview_url': mediaPreviewUrl,
         'perma_url': permaUrl,
         'album_url': albumUrl,

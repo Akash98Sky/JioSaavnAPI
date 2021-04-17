@@ -9,8 +9,8 @@ void main() {
       awesome = JioSaavn();
     });
 
-    test('First Test', () {
-      expect(awesome.isAwesome, isTrue);
+    test('Song search by id', () async {
+      expect((await awesome.getSongs(['iU7UPQsU', 'f6_mfbG0'])).length, 2);
     });
   });
 }

@@ -12,7 +12,7 @@ class Album extends JsonModel {
     this.description,
     this.ctr,
     this.position,
-    this.moreInfo = const MoreInfo(),
+    this.moreInfo = const AlbumInfo(),
   });
 
   final String? id;
@@ -24,7 +24,7 @@ class Album extends JsonModel {
   final String? description;
   final int? ctr;
   final int? position;
-  final MoreInfo moreInfo;
+  final AlbumInfo moreInfo;
 
   factory Album.fromJson(Map<String, dynamic> json) => Album(
         id: json['id'],
@@ -36,7 +36,7 @@ class Album extends JsonModel {
         description: json['description'],
         ctr: json['ctr'],
         position: json['position'],
-        moreInfo: MoreInfo.fromJson(json['more_info']),
+        moreInfo: AlbumInfo.fromJson(json['more_info']),
       );
 
   @override
@@ -54,8 +54,8 @@ class Album extends JsonModel {
       };
 }
 
-class MoreInfo {
-  const MoreInfo({
+class AlbumInfo {
+  const AlbumInfo({
     this.year,
     this.isMovie,
     this.language,
@@ -67,7 +67,7 @@ class MoreInfo {
   final String? language;
   final String? songPids;
 
-  factory MoreInfo.fromJson(Map<String, dynamic> json) => MoreInfo(
+  factory AlbumInfo.fromJson(Map<String, dynamic> json) => AlbumInfo(
         year: json['year'] == null ? null : int.parse(json['year']),
         isMovie: json['is_movie'],
         language: json['language'],
@@ -100,30 +100,36 @@ class AlbumDetails {
   final String? name;
   final int? year;
   final DateTime? releaseDate;
-  final String? primaryArtists;
-  final int? primaryArtistsId;
-  final int? albumid;
+  final List<String>? primaryArtists;
+  final List<String>? primaryArtistsId;
+  final String? albumid;
   final String? permaUrl;
   final String? image;
   final List<SongDetails> songs;
 
-  factory AlbumDetails.fromJson(Map<String, dynamic> json) => AlbumDetails(
-        title: json['title'],
-        name: json['name'],
-        year: json['year'],
-        releaseDate: json['release_date'] == null
-            ? null
-            : DateTime.parse(json['release_date']),
-        primaryArtists: json['primary_artists'],
-        primaryArtistsId: json['primary_artists_id'],
-        albumid: json['albumid'],
-        permaUrl: json['perma_url'],
-        image: json['image'],
-        songs: List<SongDetails>.from(
-          json['songs'].map((x) => SongDetails.fromJson(x)),
-          growable: false,
-        ),
-      );
+  factory AlbumDetails.fromJson(Map<String, dynamic> json) {
+    return AlbumDetails(
+      title: json['title'],
+      name: json['name'],
+      year: json['year'] == null ? null : int.parse(json['year']),
+      releaseDate: json['release_date'] == null
+          ? null
+          : DateTime.parse(json['release_date']),
+      primaryArtists: json['primary_artists'] == null
+          ? null
+          : (json['primary_artists'] as String).split(', '),
+      primaryArtistsId: json['primary_artists_id'] == null
+          ? null
+          : (json['primary_artists_id'] as String).split(', '),
+      albumid: json['albumid'],
+      permaUrl: json['perma_url'],
+      image: json['image'],
+      songs: List<SongDetails>.from(
+        json['songs'].map((x) => SongDetails.fromJson(x)),
+        growable: false,
+      ),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         'title': title,
