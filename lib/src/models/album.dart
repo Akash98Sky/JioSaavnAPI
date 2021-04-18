@@ -1,80 +1,90 @@
+import '../helpers/types.dart';
+import 'artists_map.dart';
 import 'json_model.dart';
 import 'song.dart';
 
 class Album extends JsonModel {
   Album({
-    this.id,
+    this.id = '',
     this.title,
-    this.image,
-    this.music,
-    this.url,
+    this.subtitle,
     this.type,
-    this.description,
-    this.ctr,
-    this.position,
+    this.image,
+    this.permaUrl,
     this.moreInfo = const AlbumInfo(),
+    this.explicitContent,
+    this.miniObj,
+    this.description,
   });
 
-  final String? id;
+  final String id;
   final String? title;
-  final String? image;
-  final String? music;
-  final String? url;
+  final String? subtitle;
   final String? type;
-  final String? description;
-  final int? ctr;
-  final int? position;
+  final ImageUrl? image;
+  final String? permaUrl;
   final AlbumInfo moreInfo;
+  final String? explicitContent;
+  final bool? miniObj;
+  final String? description;
 
   factory Album.fromJson(Map<String, dynamic> json) => Album(
         id: json['id'],
         title: json['title'],
-        image: json['image'],
-        music: json['music'],
-        url: json['url'],
+        subtitle: json['subtitle'],
         type: json['type'],
-        description: json['description'],
-        ctr: json['ctr'],
-        position: json['position'],
+        image: json['image'] == null ? null : ImageUrl(json['image']),
+        permaUrl: json['perma_url'],
         moreInfo: AlbumInfo.fromJson(json['more_info']),
+        explicitContent: json['explicit_content'],
+        miniObj: json['mini_obj'],
+        description: json['description'],
       );
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
-        'image': image,
-        'music': music,
-        'url': url,
+        'subtitle': subtitle,
         'type': type,
-        'description': description,
-        'ctr': ctr,
-        'position': position,
+        'image': image,
+        'perma_url': permaUrl,
         'more_info': moreInfo.toJson(),
+        'explicit_content': explicitContent,
+        'mini_obj': miniObj,
+        'description': description,
       };
 }
 
 class AlbumInfo {
   const AlbumInfo({
+    this.music,
+    this.ctr,
     this.year,
     this.isMovie,
     this.language,
     this.songPids,
   });
 
-  final int? year;
+  final String? music;
+  final int? ctr;
+  final String? year;
   final String? isMovie;
   final String? language;
   final String? songPids;
 
   factory AlbumInfo.fromJson(Map<String, dynamic> json) => AlbumInfo(
-        year: json['year'] == null ? null : int.parse(json['year']),
+        music: json['music'],
+        ctr: json['ctr'],
+        year: json['year'],
         isMovie: json['is_movie'],
         language: json['language'],
         songPids: json['song_pids'],
       );
 
   Map<String, dynamic> toJson() => {
+        'music': music,
+        'ctr': ctr,
         'year': year,
         'is_movie': isMovie,
         'language': language,
@@ -84,65 +94,108 @@ class AlbumInfo {
 
 class AlbumDetails {
   AlbumDetails({
-    this.title,
-    this.name,
-    this.year,
-    this.releaseDate,
-    this.primaryArtists,
-    this.primaryArtistsId,
-    this.albumid,
+    this.id = '',
+    this.title = '',
+    this.subtitle,
+    this.headerDesc,
+    this.type,
     this.permaUrl,
     this.image,
-    this.songs = const [],
+    this.language,
+    this.year,
+    this.playCount,
+    this.explicitContent,
+    this.listCount,
+    this.listType,
+    this.list = const [],
+    this.moreInfo = const AlbumDetailsInfo(),
   });
 
-  final String? title;
-  final String? name;
-  final int? year;
-  final DateTime? releaseDate;
-  final List<String>? primaryArtists;
-  final List<String>? primaryArtistsId;
-  final String? albumid;
+  final String id;
+  final String title;
+  final String? subtitle;
+  final String? headerDesc;
+  final String? type;
   final String? permaUrl;
-  final String? image;
-  final List<SongDetails> songs;
+  final ImageUrl? image;
+  final String? language;
+  final String? year;
+  final String? playCount;
+  final String? explicitContent;
+  final String? listCount;
+  final String? listType;
+  final List<SongDetails> list;
+  final AlbumDetailsInfo moreInfo;
 
-  factory AlbumDetails.fromJson(Map<String, dynamic> json) {
-    return AlbumDetails(
-      title: json['title'],
-      name: json['name'],
-      year: json['year'] == null ? null : int.parse(json['year']),
-      releaseDate: json['release_date'] == null
-          ? null
-          : DateTime.parse(json['release_date']),
-      primaryArtists: json['primary_artists'] == null
-          ? null
-          : (json['primary_artists'] as String).split(', '),
-      primaryArtistsId: json['primary_artists_id'] == null
-          ? null
-          : (json['primary_artists_id'] as String).split(', '),
-      albumid: json['albumid'],
-      permaUrl: json['perma_url'],
-      image: json['image'],
-      songs: List<SongDetails>.from(
-        json['songs'].map((x) => SongDetails.fromJson(x)),
-        growable: false,
-      ),
-    );
-  }
+  factory AlbumDetails.fromJson(Map<String, dynamic> json) => AlbumDetails(
+        id: json['id'],
+        title: json['title'],
+        subtitle: json['subtitle'],
+        headerDesc: json['header_desc'],
+        type: json['type'],
+        permaUrl: json['perma_url'],
+        image: json['image'] == null ? null : ImageUrl(json['image']),
+        language: json['language'],
+        year: json['year'],
+        playCount: json['play_count'],
+        explicitContent: json['explicit_content'],
+        listCount: json['list_count'],
+        listType: json['list_type'],
+        list: List<SongDetails>.from(
+          json['list'].map((x) => SongDetails.fromJson(x)),
+          growable: false,
+        ),
+        moreInfo: AlbumDetailsInfo.fromJson(json['more_info']),
+      );
 
   Map<String, dynamic> toJson() => {
+        'id': id,
         'title': title,
-        'name': name,
-        'year': year,
-        'release_date': releaseDate == null
-            ? null
-            : "${releaseDate!.year.toString().padLeft(4, '0')}-${releaseDate!.month.toString().padLeft(2, '0')}-${releaseDate!.day.toString().padLeft(2, '0')}",
-        'primary_artists': primaryArtists,
-        'primary_artists_id': primaryArtistsId,
-        'albumid': albumid,
+        'subtitle': subtitle,
+        'header_desc': headerDesc,
+        'type': type,
         'perma_url': permaUrl,
         'image': image,
-        'songs': List<dynamic>.from(songs.map((x) => x.toJson())),
+        'language': language,
+        'year': year,
+        'play_count': playCount,
+        'explicit_content': explicitContent,
+        'list_count': listCount,
+        'list_type': listType,
+        'list': List<dynamic>.from(list.map((x) => x.toJson())),
+        'more_info': moreInfo.toJson(),
+      };
+}
+
+class AlbumDetailsInfo {
+  const AlbumDetailsInfo({
+    this.artistMap = const ArtistMap(),
+    this.songCount,
+    this.copyrightText,
+    this.isDolbyContent,
+    this.labelUrl,
+  });
+
+  final ArtistMap artistMap;
+  final String? songCount;
+  final String? copyrightText;
+  final bool? isDolbyContent;
+  final String? labelUrl;
+
+  factory AlbumDetailsInfo.fromJson(Map<String, dynamic> json) =>
+      AlbumDetailsInfo(
+        artistMap: ArtistMap.fromJson(json['artistMap']),
+        songCount: json['song_count'],
+        copyrightText: json['copyright_text'],
+        isDolbyContent: json['is_dolby_content'],
+        labelUrl: json['label_url'],
+      );
+
+  Map<String, dynamic> toJson() => {
+        'artistMap': artistMap.toJson(),
+        'song_count': songCount,
+        'copyright_text': copyrightText,
+        'is_dolby_content': isDolbyContent,
+        'label_url': labelUrl,
       };
 }

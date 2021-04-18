@@ -3,17 +3,18 @@ import 'helpers/uri_builder.dart';
 import 'models/album.dart';
 import 'models/lyrics.dart';
 import 'models/playlist.dart';
-import 'models/search_result.dart';
+import 'models/autocomplete_result.dart';
 import 'models/song.dart';
 import 'services/api_client.dart';
 
 class JioSaavn {
   final _apiClient = ApiClient();
 
-  Future<SearchResult> search(String query) async {
-    final searchRes = await _apiClient.requestGetJson(buildSearchUri(query));
+  Future<AutocompleteResult> searchAutocomplete(String query) async {
+    final searchRes =
+        await _apiClient.requestGetJson(buildAutocompleteUri(query));
 
-    return SearchResult.fromJson(searchRes);
+    return AutocompleteResult.fromJson(searchRes);
   }
 
   Future<String> getSongId(String url) async {
@@ -32,8 +33,9 @@ class JioSaavn {
   Future<List<SongDetails>> getSongs(List<String> ids) async {
     final songsRes = await _apiClient.requestGetJson(buildSongIdUri(ids));
 
-    return List.from(
-        ids.map((id) => SongDetails.fromJson(formatSongJson(songsRes[id]))));
+    return (songsRes['songs'] as List)
+        .map((song) => SongDetails.fromJson(formatSongJson(song)))
+        .toList(growable: false);
   }
 
   Future<AlbumDetails> getAlbum(String albumId) async {

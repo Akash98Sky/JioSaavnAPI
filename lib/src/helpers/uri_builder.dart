@@ -1,15 +1,19 @@
-Uri buildSearchUri(String query) => Uri.https('www.jiosaavn.com', '/api.php', {
+Uri buildAutocompleteUri(String query) =>
+    Uri.https('www.jiosaavn.com', '/api.php', {
       '__call': 'autocomplete.get',
+      'ctx': 'web6dot0',
+      'api_version': '4',
       '_format': 'json',
       '_marker': '0',
       'cc': 'in',
-      'includeMetaTags': '1',
       'query': query,
     });
 
 Uri buildSongIdUri(List<String> ids) =>
     Uri.https('www.jiosaavn.com', '/api.php', {
       '__call': 'song.getDetails',
+      'ctx': 'web6dot0',
+      'api_version': '4',
       '_format': 'json',
       '_marker': '0',
       'cc': 'in',
@@ -18,6 +22,8 @@ Uri buildSongIdUri(List<String> ids) =>
 
 Uri buildAlbumIdUri(String id) => Uri.https('www.jiosaavn.com', '/api.php', {
       '__call': 'content.getAlbumDetails',
+      'ctx': 'web6dot0',
+      'api_version': '4',
       '_format': 'json',
       '_marker': '0',
       'cc': 'in',
@@ -26,6 +32,8 @@ Uri buildAlbumIdUri(String id) => Uri.https('www.jiosaavn.com', '/api.php', {
 
 Uri buildPlaylistIdUri(String id) => Uri.https('www.jiosaavn.com', '/api.php', {
       '__call': 'playlist.getDetails',
+      'ctx': 'web6dot0',
+      'api_version': '4',
       '_format': 'json',
       '_marker': '0',
       'cc': 'in',

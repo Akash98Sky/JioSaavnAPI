@@ -1,156 +1,249 @@
+import '../helpers/types.dart';
 import 'json_model.dart';
 import 'song.dart';
 
 class Playlist extends JsonModel {
   Playlist({
-    this.id,
+    this.id = '',
     this.title,
-    this.image,
-    this.extra,
-    this.url,
-    this.language,
+    this.subtitle,
     this.type,
+    this.image,
+    this.permaUrl,
+    this.moreInfo = const PlaylistInfo(),
+    this.explicitContent,
+    this.miniObj,
     this.description,
-    this.position,
   });
 
-  final String? id;
+  final String id;
   final String? title;
-  final String? image;
-  final String? extra;
-  final String? url;
-  final String? language;
+  final String? subtitle;
   final String? type;
+  final ImageUrl? image;
+  final String? permaUrl;
+  final PlaylistInfo moreInfo;
+  final String? explicitContent;
+  final bool? miniObj;
   final String? description;
-  final int? position;
 
   factory Playlist.fromJson(Map<String, dynamic> json) => Playlist(
         id: json['id'],
         title: json['title'],
-        image: json['image'],
-        extra: json['extra'],
-        url: json['url'],
-        language: json['language'],
+        subtitle: json['subtitle'],
         type: json['type'],
+        image: json['image'] == null ? null : ImageUrl(json['image']),
+        permaUrl: json['perma_url'],
+        moreInfo: PlaylistInfo.fromJson(json['more_info']),
+        explicitContent: json['explicit_content'],
+        miniObj: json['mini_obj'],
         description: json['description'],
-        position: json['position'],
       );
 
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
         'title': title,
-        'image': image,
-        'extra': extra,
-        'url': url,
-        'language': language,
+        'subtitle': subtitle,
         'type': type,
+        'image': image,
+        'perma_url': permaUrl,
+        'more_info': moreInfo.toJson(),
+        'explicit_content': explicitContent,
+        'mini_obj': miniObj,
         'description': description,
-        'position': position,
+      };
+}
+
+class PlaylistInfo {
+  const PlaylistInfo({
+    this.firstname,
+    this.artistName,
+    this.entityType,
+    this.entitySubType,
+    this.videoAvailable,
+    this.isDolbyContent,
+    this.lastname,
+    this.language,
+  });
+
+  final String? firstname;
+  final List<String>? artistName;
+  final String? entityType;
+  final String? entitySubType;
+  final bool? videoAvailable;
+  final bool? isDolbyContent;
+  final String? lastname;
+  final String? language;
+
+  factory PlaylistInfo.fromJson(Map<String, dynamic> json) => PlaylistInfo(
+        firstname: json['firstname'],
+        artistName: json['artist_name'] == null
+            ? null
+            : List.castFrom(json['artist_name']),
+        entityType: json['entity_type'],
+        entitySubType: json['entity_sub_type'],
+        videoAvailable: json['video_available'],
+        isDolbyContent: json['is_dolby_content'],
+        lastname: json['lastname'],
+        language: json['language'],
+      );
+
+  Map<String, dynamic> toJson() => {
+        'firstname': firstname,
+        'artist_name': artistName,
+        'entity_type': entityType,
+        'entity_sub_type': entitySubType,
+        'video_available': videoAvailable,
+        'is_dolby_content': isDolbyContent,
+        'lastname': lastname,
+        'language': language,
       };
 }
 
 class PlaylistDetails {
   PlaylistDetails({
-    this.listid,
-    this.listname,
+    this.id = '',
+    this.title,
+    this.subtitle,
+    this.headerDesc,
+    this.type,
     this.permaUrl,
-    this.followerCount,
-    this.uid,
+    this.image,
+    this.language,
+    this.year,
+    this.playCount,
+    this.explicitContent,
+    this.listCount,
+    this.listType,
+    this.list = const [],
+    this.moreInfo = const PlaylistDetailsInfo(),
+  });
+
+  final String id;
+  final String? title;
+  final String? subtitle;
+  final String? headerDesc;
+  final String? type;
+  final String? permaUrl;
+  final ImageUrl? image;
+  final String? language;
+  final String? year;
+  final String? playCount;
+  final String? explicitContent;
+  final String? listCount;
+  final String? listType;
+  final List<SongDetails> list;
+  final PlaylistDetailsInfo moreInfo;
+
+  factory PlaylistDetails.fromJson(Map<String, dynamic> json) =>
+      PlaylistDetails(
+        id: json['id'],
+        title: json['title'],
+        subtitle: json['subtitle'],
+        headerDesc: json['header_desc'],
+        type: json['type'],
+        permaUrl: json['perma_url'],
+        image: json['image'] == null ? null : ImageUrl(json['image']),
+        language: json['language'],
+        year: json['year'],
+        playCount: json['play_count'],
+        explicitContent: json['explicit_content'],
+        listCount: json['list_count'],
+        listType: json['list_type'],
+        list: List<SongDetails>.from(
+            json['list'].map((x) => SongDetails.fromJson(x))),
+        moreInfo: PlaylistDetailsInfo.fromJson(json['more_info']),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'title': title,
+        'subtitle': subtitle,
+        'header_desc': headerDesc,
+        'type': type,
+        'perma_url': permaUrl,
+        'image': image,
+        'language': language,
+        'year': year,
+        'play_count': playCount,
+        'explicit_content': explicitContent,
+        'list_count': listCount,
+        'list_type': listType,
+        'list': List<dynamic>.from(list.map((x) => x.toJson())),
+        'more_info': moreInfo.toJson(),
+      };
+}
+
+class PlaylistDetailsInfo {
+  const PlaylistDetailsInfo({
+    this.uid = '',
+    this.isDolbyContent,
+    this.subtype = const [],
     this.lastUpdated,
     this.username,
     this.firstname,
     this.lastname,
     this.isFollowed,
     this.isFy,
-    this.image,
-    this.share,
-    this.songs = const [],
-    this.type,
-    this.listCount,
+    this.followerCount,
     this.fanCount,
+    this.playlistType,
+    this.share,
     this.h2,
-    this.isDolbyPlaylist,
     this.subheading,
-    this.videoAvailable,
   });
 
-  final int? listid;
-  final String? listname;
-  final String? permaUrl;
-  final int? followerCount;
-  final String? uid;
-  final int? lastUpdated;
+  final String uid;
+  final bool? isDolbyContent;
+  final List<String> subtype;
+  final String? lastUpdated;
   final String? username;
   final String? firstname;
   final String? lastname;
-  final bool? isFollowed;
+  final String? isFollowed;
   final bool? isFy;
-  final String? image;
-  final int? share;
-  final List<SongDetails> songs;
-  final String? type;
-  final int? listCount;
-  final int? fanCount;
+  final String? followerCount;
+  final String? fanCount;
+  final String? playlistType;
+  final String? share;
   final String? h2;
-  final bool? isDolbyPlaylist;
   final String? subheading;
-  final bool? videoAvailable;
 
-  factory PlaylistDetails.fromJson(Map<String, dynamic> json) =>
-      PlaylistDetails(
-        listid: json['listid'] == null ? null : int.parse(json['listid']),
-        listname: json['listname'],
-        permaUrl: json['perma_url'],
-        followerCount: json['follower_count'] == null
-            ? null
-            : int.parse(json['follower_count']),
+  factory PlaylistDetailsInfo.fromJson(Map<String, dynamic> json) =>
+      PlaylistDetailsInfo(
         uid: json['uid'],
-        lastUpdated: json['last_updated'] == null
-            ? null
-            : int.parse(json['last_updated']),
+        isDolbyContent: json['is_dolby_content'],
+        subtype: List.castFrom(json['subtype']),
+        lastUpdated: json['last_updated'],
         username: json['username'],
         firstname: json['firstname'],
         lastname: json['lastname'],
         isFollowed: json['is_followed'],
         isFy: json['isFY'],
-        image: json['image'],
-        share: json['share'] == null ? null : int.parse(json['share']),
-        songs: List<SongDetails>.from(
-          json['songs'].map((x) => SongDetails.fromJson(x)),
-          growable: false,
-        ),
-        type: json['type'],
-        listCount:
-            json['list_count'] == null ? null : int.parse(json['list_count']),
+        followerCount: json['follower_count'],
         fanCount: json['fan_count'],
+        playlistType: json['playlist_type'],
+        share: json['share'],
         h2: json['H2'],
-        isDolbyPlaylist: json['is_dolby_playlist'],
         subheading: json['subheading'],
-        videoAvailable: json['video_available'],
       );
 
   Map<String, dynamic> toJson() => {
-        'listid': listid,
-        'listname': listname,
-        'perma_url': permaUrl,
-        'follower_count': followerCount,
         'uid': uid,
+        'is_dolby_content': isDolbyContent,
+        'subtype': subtype,
         'last_updated': lastUpdated,
         'username': username,
         'firstname': firstname,
         'lastname': lastname,
         'is_followed': isFollowed,
         'isFY': isFy,
-        'image': image,
-        'share': share,
-        'songs': List.from(songs.map((x) => x.toJson())),
-        'type': type,
-        'list_count': listCount,
+        'follower_count': followerCount,
         'fan_count': fanCount,
+        'playlist_type': playlistType,
+        'share': share,
         'H2': h2,
-        'is_dolby_playlist': isDolbyPlaylist,
         'subheading': subheading,
-        'video_available': videoAvailable,
       };
 }

@@ -7,7 +7,7 @@ library jiosaavn_api;
 export 'src/models/album.dart';
 export 'src/models/lyrics.dart';
 export 'src/models/playlist.dart';
-export 'src/models/search_result.dart';
+export 'src/models/autocomplete_result.dart';
 export 'src/models/song.dart';
 
 /// API Base

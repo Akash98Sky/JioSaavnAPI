@@ -6,9 +6,9 @@ Future<void> main() async {
   print((await awesome.getSongs(['iU7UPQsU', 'f6_mfbG0']))
       .map((x) => x.toJson()));
 
-  print((await awesome.search('Jee le zara')).toJson());
+  // print((await awesome.searchAutocomplete('Jee le zara')).toJson());
 
-  print((await awesome.getAlbum('17900338')).toJson());
+  // print((await awesome.getAlbum('17900338')).toJson());
 
-  print((await awesome.getPlaylist('5148894')).toJson());
+  // print((await awesome.getPlaylist('5148894')).toJson());
 }
