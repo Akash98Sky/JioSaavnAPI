@@ -19,6 +19,16 @@ class ApiClient {
     return res.body;
   }
 
+  Future<List<Map<String, dynamic>>> requestGetListJson(
+    Uri url, {
+    Map<String, String> headers = const {},
+  }) async {
+    final res =
+        await _client.get(url, headers: {...headers, 'User-Agent': _userAgent});
+
+    return jsonDecode(res.body);
+  }
+
   Future<Map<String, dynamic>> requestGetJson(
     Uri url, {
     Map<String, String> headers = const {},

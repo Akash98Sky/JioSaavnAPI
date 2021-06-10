@@ -1,10 +1,11 @@
 import 'helpers/formatter.dart';
 import 'helpers/uri_builder.dart';
 import 'models/album.dart';
+import 'models/autocomplete_result.dart';
 import 'models/lyrics.dart';
 import 'models/playlist.dart';
-import 'models/autocomplete_result.dart';
 import 'models/song.dart';
+import 'models/top_search.dart';
 import 'services/api_client.dart';
 
 class JioSaavn {
@@ -15,6 +16,12 @@ class JioSaavn {
         await _apiClient.requestGetJson(buildAutocompleteUri(query));
 
     return AutocompleteResult.fromJson(searchRes);
+  }
+
+  Future<List<TopSearchItem>> getTopSearches() async {
+    final res = await _apiClient.requestGetListJson(topSearchUri);
+
+    return TopSearchItem.fromList(res);
   }
 
   Future<String> getSongId(String url) async {

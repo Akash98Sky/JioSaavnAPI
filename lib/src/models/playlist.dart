@@ -2,6 +2,87 @@ import '../helpers/types.dart';
 import 'json_model.dart';
 import 'song.dart';
 
+class TopPlaylist {
+  TopPlaylist({
+    required this.id,
+    required this.title,
+    required this.subtitle,
+    required this.type,
+    required this.image,
+    required this.permaUrl,
+    required this.moreInfo,
+    required this.explicitContent,
+    required this.miniObj,
+  });
+
+  final String id;
+  final String title;
+  final String subtitle;
+  final String type;
+  final String image;
+  final String permaUrl;
+  final TopPlaylistMoreInfo moreInfo;
+  final String explicitContent;
+  final bool miniObj;
+
+  factory TopPlaylist.fromJson(Map<String, dynamic> json) => TopPlaylist(
+        id: json['id'],
+        title: json['title'],
+        subtitle: json['subtitle'],
+        type: json['type'],
+        image: json['image'],
+        permaUrl: json['perma_url'],
+        moreInfo: TopPlaylistMoreInfo.fromJson(json['more_info']),
+        explicitContent: json['explicit_content'],
+        miniObj: json['mini_obj'],
+      );
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'title': title,
+        'subtitle': subtitle,
+        'type': type,
+        'image': image,
+        'perma_url': permaUrl,
+        'more_info': moreInfo.toJson(),
+        'explicit_content': explicitContent,
+        'mini_obj': miniObj,
+      };
+}
+
+class TopPlaylistMoreInfo {
+  TopPlaylistMoreInfo({
+    required this.songCount,
+    required this.firstname,
+    required this.followerCount,
+    required this.lastUpdated,
+    required this.uid,
+  });
+
+  final String songCount;
+  final String firstname;
+  final String followerCount;
+  final String lastUpdated;
+  final String uid;
+
+  factory TopPlaylistMoreInfo.fromJson(Map<String, dynamic> json) =>
+      TopPlaylistMoreInfo(
+        songCount: json['song_count'],
+        firstname: json['firstname'],
+        followerCount: json['follower_count'],
+        lastUpdated: json['last_updated'],
+        uid: json['uid'],
+      );
+
+  Map<String, dynamic> toJson() => {
+        'song_count': songCount,
+        'firstname': firstname,
+        'follower_count': followerCount,
+        'last_updated': lastUpdated,
+        'uid': uid,
+      };
+}
+
 class Playlist extends JsonModel {
   Playlist({
     this.id = '',

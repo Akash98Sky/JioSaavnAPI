@@ -1,3 +1,12 @@
+final topSearchUri = Uri.https('www.jiosaavn.com', '/api.php', {
+  '__call': 'content.getTopSearches',
+  'ctx': 'web6dot0',
+  'api_version': '4',
+  '_format': 'json',
+  '_marker': '0',
+  'cc': 'in',
+});
+
 Uri buildAutocompleteUri(String query) =>
     Uri.https('www.jiosaavn.com', '/api.php', {
       '__call': 'autocomplete.get',
