@@ -56,11 +56,11 @@ class MoreInfo {
     required this.stationDisplayText,
   });
 
-  final String description;
+  final String? description;
   final FeaturedStationType featuredStationType;
   final String query;
-  final String color;
-  final String language;
+  final String? color;
+  final String? language;
   final String stationDisplayText;
 
   factory MoreInfo.fromJson(Map<String, dynamic> json) => MoreInfo(

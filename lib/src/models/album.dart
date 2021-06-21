@@ -141,10 +141,12 @@ class AlbumDetails {
         explicitContent: json['explicit_content'],
         listCount: json['list_count'],
         listType: json['list_type'],
-        list: List<SongDetails>.from(
-          json['list'].map((x) => SongDetails.fromJson(x)),
-          growable: false,
-        ),
+        list: json['list'] is Map
+            ? List<SongDetails>.from(
+                json['list'].map((x) => SongDetails.fromJson(x)),
+                growable: false,
+              )
+            : List.empty(growable: false),
         moreInfo: AlbumDetailsInfo.fromJson(json['more_info']),
       );
 

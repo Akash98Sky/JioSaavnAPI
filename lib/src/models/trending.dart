@@ -18,7 +18,6 @@ class NewTrending {
     required this.listType,
     required this.list,
     required this.moreInfo,
-    required this.modules,
   });
 
   final String id;
@@ -36,7 +35,6 @@ class NewTrending {
   final String listType;
   final String list;
   final NewTrendingMoreInfo moreInfo;
-  final dynamic modules;
 
   factory NewTrending.fromJson(Map<String, dynamic> json) => NewTrending(
         id: json['id'],
@@ -54,7 +52,6 @@ class NewTrending {
         listType: json['list_type'],
         list: json['list'],
         moreInfo: NewTrendingMoreInfo.fromJson(json['more_info']),
-        modules: json['modules'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -73,7 +70,6 @@ class NewTrending {
         'list_type': listType,
         'list': list,
         'more_info': moreInfo.toJson(),
-        'modules': modules,
       };
 }
 
@@ -105,38 +101,36 @@ class NewTrendingMoreInfo {
     required this.labelUrl,
     required this.vcode,
     required this.vlink,
-    required this.trillerAvailable,
     required this.lyricsId,
   });
 
   final DateTime? releaseDate;
-  final String songCount;
+  final String? songCount;
   final ArtistMap artistMap;
-  final String isWeekly;
-  final String firstname;
-  final String followerCount;
-  final String fanCount;
-  final String music;
-  final String albumId;
-  final String album;
-  final String label;
-  final String origin;
+  final String? isWeekly;
+  final String? firstname;
+  final String? followerCount;
+  final String? fanCount;
+  final String? music;
+  final String? albumId;
+  final String? album;
+  final String? label;
+  final String? origin;
   final bool isDolbyContent;
-  final String the320Kbps;
-  final String encryptedMediaUrl;
-  final String encryptedCacheUrl;
-  final String albumUrl;
-  final String duration;
-  final String cacheState;
-  final String hasLyrics;
-  final String lyricsSnippet;
-  final String starred;
-  final String copyrightText;
-  final String labelUrl;
-  final String vcode;
-  final String vlink;
-  final bool trillerAvailable;
-  final String lyricsId;
+  final String? the320Kbps;
+  final String? encryptedMediaUrl;
+  final String? encryptedCacheUrl;
+  final String? albumUrl;
+  final String? duration;
+  final String? cacheState;
+  final String? hasLyrics;
+  final String? lyricsSnippet;
+  final String? starred;
+  final String? copyrightText;
+  final String? labelUrl;
+  final String? vcode;
+  final String? vlink;
+  final String? lyricsId;
 
   factory NewTrendingMoreInfo.fromJson(Map<String, dynamic> json) =>
       NewTrendingMoreInfo(
@@ -144,7 +138,7 @@ class NewTrendingMoreInfo {
             ? null
             : DateTime.parse(json['release_date']),
         songCount: json['song_count'],
-        artistMap: ArtistMap.fromJson(json['artistMap']),
+        artistMap: ArtistMap.fromJson(json['artistMap'] ?? {}),
         isWeekly: json['isWeekly'],
         firstname: json['firstname'],
         followerCount: json['follower_count'],
@@ -154,7 +148,7 @@ class NewTrendingMoreInfo {
         album: json['album'],
         label: json['label'],
         origin: json['origin'],
-        isDolbyContent: json['is_dolby_content'],
+        isDolbyContent: json['is_dolby_content'] ?? false,
         the320Kbps: json['320kbps'],
         encryptedMediaUrl: json['encrypted_media_url'],
         encryptedCacheUrl: json['encrypted_cache_url'],
@@ -168,7 +162,6 @@ class NewTrendingMoreInfo {
         labelUrl: json['label_url'],
         vcode: json['vcode'],
         vlink: json['vlink'],
-        trillerAvailable: json['triller_available'],
         lyricsId: json['lyrics_id'],
       );
 
@@ -201,7 +194,6 @@ class NewTrendingMoreInfo {
         'label_url': labelUrl,
         'vcode': vcode,
         'vlink': vlink,
-        'triller_available': trillerAvailable,
         'lyrics_id': lyricsId,
       };
 }

@@ -13,13 +13,13 @@ class Chart {
 
   final String id;
   final String title;
-  final String subtitle;
+  final String? subtitle;
   final String type;
   final String image;
   final String permaUrl;
   final ChartMoreInfo moreInfo;
-  final String explicitContent;
-  final bool miniObj;
+  final String? explicitContent;
+  final bool? miniObj;
 
   factory Chart.fromJson(Map<String, dynamic> json) => Chart(
         id: json['id'],
@@ -51,7 +51,7 @@ class ChartMoreInfo {
     required this.firstname,
   });
 
-  final String firstname;
+  final String? firstname;
 
   factory ChartMoreInfo.fromJson(Map<String, dynamic> json) => ChartMoreInfo(
         firstname: json['firstname'],

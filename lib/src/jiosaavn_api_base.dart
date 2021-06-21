@@ -2,6 +2,7 @@ import 'helpers/formatter.dart';
 import 'helpers/uri_builder.dart';
 import 'models/album.dart';
 import 'models/autocomplete_result.dart';
+import 'models/launch_data.dart';
 import 'models/lyrics.dart';
 import 'models/playlist.dart';
 import 'models/song.dart';
@@ -10,6 +11,12 @@ import 'services/api_client.dart';
 
 class JioSaavn {
   final _apiClient = ApiClient();
+
+  Future<LaunchData> getLaunchData() async {
+    final data = await _apiClient.requestGetJson(launchDataUrl);
+
+    return LaunchData.fromJson(data);
+  }
 
   Future<AutocompleteResult> searchAutocomplete(String query) async {
     final searchRes =
