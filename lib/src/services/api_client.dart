@@ -38,4 +38,8 @@ class ApiClient {
 
     return jsonDecode(res.body);
   }
+
+  void close() {
+    return _client.close();
+  }
 }

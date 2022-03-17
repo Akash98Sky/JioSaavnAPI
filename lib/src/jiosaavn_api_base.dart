@@ -71,4 +71,6 @@ class JioSaavn {
 
     return Lyrics.fromJson(lyricsRes);
   }
+
+  void close() => _apiClient.close();
 }

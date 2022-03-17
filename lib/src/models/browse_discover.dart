@@ -71,7 +71,9 @@ class BrowseDiscoverMoreInfo {
         subType: _subTypeValues.map[json['sub_type']]!,
         available: json['available'],
         isFeatured: json['is_featured'],
-        tags: Tags.fromJson(json['tags']),
+        tags: json['tags'] is Map<String, dynamic>
+            ? Tags.fromJson(json['tags'])
+            : Tags.fromJson({}),
         videoUrl: json['video_url'],
         videoThumbnail: json['video_thumbnail'],
       );

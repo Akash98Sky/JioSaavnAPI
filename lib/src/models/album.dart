@@ -5,8 +5,8 @@ import 'song.dart';
 
 class Album extends JsonModel {
   Album({
-    this.id = '',
-    this.title,
+    required this.id,
+    required this.title,
     this.subtitle,
     this.type,
     this.image,
@@ -18,7 +18,7 @@ class Album extends JsonModel {
   });
 
   final String id;
-  final String? title;
+  final String title;
   final String? subtitle;
   final String? type;
   final ImageUrl? image;
@@ -94,8 +94,8 @@ class AlbumInfo {
 
 class AlbumDetails {
   AlbumDetails({
-    this.id = '',
-    this.title = '',
+    required this.id,
+    required this.title,
     this.subtitle,
     this.headerDesc,
     this.type,
@@ -186,7 +186,7 @@ class AlbumDetailsInfo {
 
   factory AlbumDetailsInfo.fromJson(Map<String, dynamic> json) =>
       AlbumDetailsInfo(
-        artistMap: ArtistMap.fromJson(json['artistMap']),
+        artistMap: ArtistMap.fromJson(json['artistMap'] ?? {}),
         songCount: json['song_count'],
         copyrightText: json['copyright_text'],
         isDolbyContent: json['is_dolby_content'],

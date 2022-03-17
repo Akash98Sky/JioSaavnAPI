@@ -13,4 +13,6 @@ Future<void> main() async {
   // print((await awesome.getAlbum('17900338')).toJson());
 
   // print((await awesome.getPlaylist('5148894')).toJson());
+
+  return awesome.close();
 }
