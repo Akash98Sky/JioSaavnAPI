@@ -11,7 +11,9 @@ Map<String, dynamic> formatSongJson(Map<String, dynamic> data) {
 
 Map<String, dynamic> formatAlbumJson(Map<String, dynamic> data) {
   data['title'] = _formatString(data['title']);
-  (data['list'] as List).forEach((song) => formatSongJson(song));
+  if (data['list'] is List) {
+    (data['list'] as List).forEach((song) => formatSongJson(song));
+  }
 
   return data;
 }

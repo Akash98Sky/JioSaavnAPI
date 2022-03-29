@@ -109,8 +109,8 @@ class SongInfo {
 
 class SongDetails {
   SongDetails({
-    this.id,
-    this.title,
+    required this.id,
+    required this.title,
     this.subtitle,
     this.headerDesc,
     this.type,
@@ -126,8 +126,8 @@ class SongDetails {
     this.moreInfo = const SongDetailsInfo(),
   });
 
-  final String? id;
-  final String? title;
+  final String id;
+  final String title;
   final String? subtitle;
   final String? headerDesc;
   final String? type;
